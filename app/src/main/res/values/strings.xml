@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DayClicker</string>
+    <string name="widget_label">DayClicker</string>
+    <string name="widget_description">Tap to log a worked day</string>
+</resources>
