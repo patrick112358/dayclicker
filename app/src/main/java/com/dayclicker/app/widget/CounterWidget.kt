@@ -90,11 +90,11 @@ private fun WidgetUi(
                 )
             )
     ) {
-        Column(modifier = GlanceModifier.fillMaxSize().padding(12.dp)) {
+        Column(modifier = GlanceModifier.fillMaxSize().padding(10.dp)) {
             Box(
                 modifier = GlanceModifier
-                    .width(32.dp)
-                    .height(4.dp)
+                    .width(28.dp)
+                    .height(3.dp)
                     .background(ColorProvider(accent, accent))
                     .cornerRadius(2.dp)
             ) {}
@@ -102,15 +102,15 @@ private fun WidgetUi(
             Text(
                 text = counterName,
                 style = TextStyle(
-                    fontSize = 12.sp,
+                    fontSize = 11.sp,
                     color = ColorProvider(Color(0xFF5F5E5A), Color(0xFFB4B2A9))
                 )
             )
-            Box(modifier = GlanceModifier.height(4.dp)) {}
+            Box(modifier = GlanceModifier.height(2.dp)) {}
             Text(
                 text = currentCount.toString(),
                 style = TextStyle(
-                    fontSize = 40.sp,
+                    fontSize = 60.sp,
                     fontWeight = FontWeight.Medium,
                     color = ColorProvider(Color.Black, Color.White)
                 )

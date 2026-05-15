@@ -33,7 +33,16 @@ class NoteInputActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val counterId = intent.getLongExtra(EXTRA_COUNTER_ID, -1L)
+        handleIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(incomingIntent: Intent) {
+        val counterId = incomingIntent.getLongExtra(EXTRA_COUNTER_ID, -1L)
         if (counterId < 0L) {
             finish()
             return

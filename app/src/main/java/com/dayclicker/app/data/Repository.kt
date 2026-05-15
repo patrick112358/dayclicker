@@ -1,8 +1,12 @@
 package com.dayclicker.app.data
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import androidx.glance.appwidget.updateAll
 import com.dayclicker.app.widget.CounterWidget
+import com.dayclicker.app.widget.CounterWidgetReceiver
 import kotlinx.coroutines.flow.Flow
 
 class Repository(
@@ -92,8 +96,22 @@ class Repository(
     private suspend fun refreshWidgets() {
         try {
             CounterWidget().updateAll(appContext)
-        } catch (_: Exception) {
-            // Widget might not be placed; ignore
-        }
+        } catch (_: Exception) {}
+        // Belt-and-suspenders: standard broadcast pipeline guarantees update
+        // even if Glance's internal scheduler is delayed
+        try {
+            val manager = AppWidgetManager.getInstance(appContext)
+            val ids = manager.getAppWidgetIds(
+                ComponentName(appContext, CounterWidgetReceiver::class.java)
+            )
+            if (ids.isNotEmpty()) {
+                appContext.sendBroadcast(
+                    Intent(appContext, CounterWidgetReceiver::class.java).apply {
+                        action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+                        putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+                    }
+                )
+            }
+        } catch (_: Exception) {}
     }
 }
