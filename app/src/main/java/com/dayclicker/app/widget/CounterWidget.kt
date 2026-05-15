@@ -2,7 +2,6 @@ package com.dayclicker.app.widget
 
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -12,6 +11,8 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
+import androidx.glance.action.ActionParameters
+import androidx.glance.action.actionParametersOf
 import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
@@ -36,6 +37,8 @@ import com.dayclicker.app.ui.note.NoteInputActivity
 object WidgetKeys {
     val COUNTER_ID = longPreferencesKey("widget_counter_id")
 }
+
+private val counterIdActionKey = ActionParameters.Key<Long>(NoteInputActivity.EXTRA_COUNTER_ID)
 
 class CounterWidget : GlanceAppWidget() {
 
@@ -67,15 +70,6 @@ private fun WidgetUi(
     currentCount: Int,
     counterColorHex: String
 ) {
-    val intent = Intent().apply {
-        component = ComponentName(
-            "com.dayclicker.app",
-            "com.dayclicker.app.ui.note.NoteInputActivity"
-        )
-        putExtra(NoteInputActivity.EXTRA_COUNTER_ID, counterId)
-        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-    }
-
     val accent = try {
         Color(android.graphics.Color.parseColor(counterColorHex))
     } catch (_: Exception) { Color(0xFF185FA5) }
@@ -86,7 +80,15 @@ private fun WidgetUi(
             .padding(8.dp)
             .background(ColorProvider(Color.White, Color(0xFF1A1A1A)))
             .cornerRadius(16.dp)
-            .clickable(actionStartActivity(intent))
+            .clickable(
+                actionStartActivity(
+                    ComponentName(
+                        "com.dayclicker.app",
+                        "com.dayclicker.app.ui.note.NoteInputActivity"
+                    ),
+                    actionParametersOf(counterIdActionKey to counterId)
+                )
+            )
     ) {
         Column(modifier = GlanceModifier.fillMaxSize().padding(12.dp)) {
             Box(
