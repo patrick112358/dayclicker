@@ -1,7 +1,9 @@
 package com.dayclicker.app.ui.detail
 
 import android.app.Application
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -152,8 +155,8 @@ fun CounterDetailScreen(
                             modifier = Modifier.weight(1f)
                         ) {
                             Icon(Icons.Default.Remove, contentDescription = null)
-                            Spacer(Modifier.height(8.dp))
-                            Text(" 1")
+                            Spacer(Modifier.width(4.dp))
+                            Text("−1")
                         }
                         Button(
                             onClick = {
@@ -164,8 +167,8 @@ fun CounterDetailScreen(
                             colors = ButtonDefaults.buttonColors(containerColor = accent, contentColor = Color.White)
                         ) {
                             Icon(Icons.Default.Add, contentDescription = null)
-                            Spacer(Modifier.height(8.dp))
-                            Text(" 1")
+                            Spacer(Modifier.width(4.dp))
+                            Text("+1")
                         }
                     }
                     Spacer(Modifier.height(12.dp))
@@ -255,6 +258,7 @@ fun CounterDetailScreen(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun EntryRow(entry: Entry, onLongPress: () -> Unit) {
     val df = remember { SimpleDateFormat("MMM d", Locale.getDefault()) }
@@ -273,6 +277,7 @@ private fun EntryRow(entry: Entry, onLongPress: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .combinedClickable(onClick = {}, onLongClick = onLongPress)
             .padding(vertical = 10.dp),
         verticalAlignment = Alignment.Top
     ) {

@@ -1,9 +1,7 @@
 package com.dayclicker.app.data
 
 import android.content.Context
-import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.updateAll
-import androidx.room.withTransaction
 import com.dayclicker.app.widget.CounterWidget
 import kotlinx.coroutines.flow.Flow
 
