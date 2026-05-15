@@ -25,19 +25,3 @@ This repo builds an installable debug APK automatically via GitHub Actions — n
 - Release-signed APK (this is a debug-signed APK, fine for personal use)
 
 ---
-
-
-## Project layout
-
-```
-.github/workflows/build.yml      ← CI that builds the APK
-app/build.gradle.kts             ← app module config
-app/src/main/AndroidManifest.xml ← activities, widget receiver
-app/src/main/java/com/dayclicker/app/
-├── DayClickerApp.kt             ← Application class
-├── data/                        ← Room DB, entities, repository
-├── ui/                          ← Compose screens
-│   ├── MainActivity.kt
-│   ├── home/, detail/, edit/, note/, theme/
-└── widget/                      ← Glance widget + config + receiver
-```
